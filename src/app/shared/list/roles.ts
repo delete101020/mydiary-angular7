@@ -1,0 +1,21 @@
+export const ROLES = [
+  { name: 'account', roles: ['account.create', 'account.list', 'account.detail', 'account.edit', 'account.delete']},
+  { name: 'bug', roles: ['bug.create', 'bug.list', 'bug.detail', 'bug.edit', 'bug.delete']},
+  { name: 'calendar', roles: ['calendar.create', 'calendar.list', 'calendar.detail', 'calendar.edit', 'calendar.delete']},
+  { name: 'client', roles: ['client.create', 'client.list', 'client.detail', 'client.edit', 'client.delete']},
+  { name: 'diary', roles: ['diary.create', 'diary.list', 'diary.detail', 'diary.edit', 'diary.delete']},
+  { name: 'file', roles: ['file.create', 'file.list', 'file.detail', 'file.edit', 'file.delete']},
+  { name: 'finance', roles: ['finance.create', 'finance.list', 'finance.detail', 'finance.edit', 'finance.delete']},
+  { name: 'framework', roles: ['framework.create', 'framework.list', 'framework.detail', 'framework.edit', 'framework.delete']},
+  { name: 'function', roles: ['function.create', 'function.list', 'function.detail', 'function.edit', 'function.delete']},
+  { name: 'group', roles: ['group.create', 'group.list', 'group.detail', 'group.edit', 'group.delete']},
+  { name: 'job', roles: ['job.create', 'job.list', 'job.detail', 'job.edit', 'job.delete']},
+  { name: 'music', roles: ['music.create', 'music.list', 'music.detail', 'music.edit', 'music.delete']},
+  { name: 'project', roles: ['project.create', 'project.list', 'project.detail', 'project.edit', 'project.delete']},
+  { name: 'report', roles: ['report.create', 'report.list', 'report.detail', 'report.edit', 'report.delete']},
+  { name: 'skill', roles: ['skill.create', 'skill.list', 'skill.detail', 'skill.edit', 'skill.delete']},
+  { name: 'tool', roles: ['tool.create', 'tool.list', 'tool.detail', 'tool.edit', 'tool.delete']},
+  { name: 'user', roles: ['user.create', 'user.list', 'user.detail', 'user.edit', 'user.delete']},
+  { name: 'video', roles: ['video.create', 'video.list', 'video.detail', 'video.edit', 'video.delete']},
+  { name: 'upload', roles: ['upload.single', 'upload.multi']}
+];

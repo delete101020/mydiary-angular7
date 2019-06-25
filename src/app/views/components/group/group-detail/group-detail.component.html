@@ -1,0 +1,71 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>Basic Form</strong> Elements
+        </div>
+        <div class="card-body">
+          <form class="form-horizontal" [formGroup]="groupForm" (ngSubmit)="save()">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="id-input">ID</label>
+              <div class="col-md-9">
+                <input type="text" id="id-input" name="id-input" class="form-control" placeholder="Disabled" disabled
+                  value="{{element.id}}">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="name-input">Name</label>
+              <div class="col-md-9">
+                <input type="text" id="name-input" name="name-input" class="form-control" formControlName="name">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="roles-input">Roles</label>
+              <div class="col-md-9">
+                <table class="table table-responsive-sm table-bordered">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>Create</th>
+                      <th>List</th>
+                      <th>Detail</th>
+                      <th>Edit</th>
+                      <th>Delete</th>
+                    </tr>
+                  </thead>
+                  <tbody formArrayName="roles">
+                    <tr *ngFor="let l of raw; let i = index">
+                      <td>{{l.name | uppercase}}</td>
+                      <td *ngFor="let r of l.roles; let j = index">
+                        <label class="switch switch-label switch-outline-primary-alt">
+                          <input class="switch-input" type="checkbox" id="role-input" name="role-input" [formControlName]="i * 5 + j" value="r[j]">
+                          <span class="switch-slider" data-checked="&#x2713;" data-unchecked="&#x2715;"></span>
+                        </label>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Users</label>
+              <div class="col-md-9">
+                <select class="form-control" size="5" multiple formControlName="users" name="users" id="users">
+                  <option *ngFor="let user of userList" [ngValue]="user"> User {{user}}</option>
+                </select>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="card-footer">
+          <button type="submit" class="btn btn-sm btn-primary" (click)="save()" [disabled]="!groupForm.valid"><i class="fa fa-dot-circle-o"></i>
+            Submit</button>
+          <button type="reset" class="btn btn-sm btn-danger" (click)="goBack()"><i class="fa fa-ban"></i> Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/.row-->
+</div>
