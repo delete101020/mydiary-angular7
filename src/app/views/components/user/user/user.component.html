@@ -1,3 +1,42 @@
-<p>
-  user works!
-</p>
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> User List
+        </div>
+        <div class="card-body">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Gender</th>
+                <th>Birthday</th>
+                <th>Phone</th>
+                <th>Group</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let element of list$ | async">
+                <td>{{element.id}}</td>
+                <td>{{element.name}}</td>
+                <td>{{element.email}}</td>
+                <td *ngIf="!element.gender">Male</td><td *ngIf="element.gender">Female</td>
+                <td>{{element.birthday | date}}</td>
+                <td>{{element.phone}}</td>
+                <td>{{element.groupId}}</td>
+                <td>
+                  <button type="button" class="btn btn-primary" routerLink="/user/detail/{{element.id}}" [disabled]="canView === false">Detail</button>
+                  <button type="button" class="btn btn-danger" (click)="deleteElement(element.id)" [disabled]="canDelete === false">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
