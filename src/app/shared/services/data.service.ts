@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 
 import { Config } from '../models';
 import { AuthService } from '../../auth/auth.service';
@@ -12,6 +12,7 @@ import { AuthService } from '../../auth/auth.service';
 export class DataService {
 
   private backendUrl = 'http://localhost:3000/api';
+  private uploadUrl = 'http://localhost:3000/upload/single';
 
   constructor(
     private http: HttpClient,
@@ -63,6 +64,17 @@ export class DataService {
     }
     console.log('From Data Service: ' + apiUrl);
     return apiUrl;
+  }
+
+  async upload(file: File) {
+    const formData = new FormData();
+    formData.append('image', file, file.name);
+    let path = '';
+    await this.http.post<any>(this.uploadUrl, formData).toPromise()
+      .then(res => {
+        path = res.path;
+      });
+    return path;
   }
 
   private handleError<T> (operation = 'operation', result ?: T) {

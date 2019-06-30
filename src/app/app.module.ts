@@ -38,6 +38,7 @@ import { AppRoutingModule } from './app.routing';
 // Import 3rd party components
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 import { AuthModule } from './auth/auth.module';
 import { JwtInterceptor, ErrorInterceptor } from './helpers';
@@ -56,7 +57,8 @@ import { JwtInterceptor, ErrorInterceptor } from './helpers';
     AppSidebarModule,
     PerfectScrollbarModule,
     BsDropdownModule.forRoot(),
-    TabsModule.forRoot()
+    TabsModule.forRoot(),
+    CKEditorModule
   ],
   declarations: [
     AppComponent,

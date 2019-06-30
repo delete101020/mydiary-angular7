@@ -9,9 +9,9 @@ export interface IUser {
   address?: string;
   avatar?: string;
   advantages?: string;
-  defect?: string;
+  defects?: string;
   hobbies?: string;
   marital?: boolean;
-  urlFb?: string;
+  urlFB?: string;
   groupId?: number;
 }

@@ -1,3 +1,143 @@
-<p>
-  user-detail works!
-</p>
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>Basic Form</strong> Elements
+        </div>
+        <div class="card-body">
+          <form class="form-horizontal" [formGroup]="userForm" (ngSubmit)="save()">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="id-input">ID</label>
+              <div class="col-md-9">
+                <input type="text" id="id-input" name="id-input" class="form-control" placeholder="Disabled"
+                  value="{{element.id}}" disabled>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="name-input">Name</label>
+              <div class="col-md-9">
+                <input type="text" id="name-input" name="name-input" class="form-control" formControlName="name">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="email-input">Email</label>
+              <div class="col-md-9">
+                <input type="email" id="email-input" name="email-input" class="form-control" formControlName="email">
+                <span class="help-block">Please enter your email</span>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="password-input">Password</label>
+              <div class="col-md-9">
+                <input type="password" id="password-input" name="password-input" class="form-control"
+                  formControlName="password">
+                <span class="help-block">Please enter your password</span>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="repassword-input">Retype Password</label>
+              <div class="col-md-9">
+                <input type="password" id="repassword-input" name="repassword-input" class="form-control"
+                  formControlName="retypePassword">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="phone-input">Phone</label>
+              <div class="col-md-9">
+                <input type="tel" id="phone-input" name="phone-input" class="form-control" formControlName="phone">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="gender-input">Gender (Male/Female)</label>
+              <div class="col-md-9">
+                <label class="switch switch-pill switch-primary">
+                  <input class="switch-input" type="checkbox" formControlName="gender">
+                  <span class="switch-slider"></span>
+                </label>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="birthday-input">Birthday</label>
+              <div class="col-md-9">
+                <input class="form-control" id="birthday-input" type="date" name="birthday-input"
+                  formControlName="birthday">
+                <span class="help-block">Please enter a valid date</span>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="address-input">Address</label>
+              <div class="col-md-9">
+                <input type="text" id="address-input" name="address-input" class="form-control"
+                  formControlName="address">
+              </div>
+            </div>
+            <div class="form-group row" *ngIf="element.avatar">
+              <label class="col-md-3 col-form-label">Avatar</label>
+              <div class="col-md-9">
+                <img class="avatar" src="{{element.avatar}}"/>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="avatar-input" *ngIf="!element.avatar">Avatar</label>
+              <label class="col-md-3 col-form-label" for="avatar-input" *ngIf="element.avatar"></label>
+              <div class="col-md-9">
+                <input type="file" id="avatar-input" name="avatar-input" accept="image/*" (change)="onChangeImage($event)">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="advantages-input">Advantages</label>
+              <div class="col-md-9">
+                <ckeditor id="advantages-input" name="advantages-input" [editor]="advantagesEditor" [(ngModel)]="advantages" [ngModelOptions]="{standalone: true}"></ckeditor>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="defects-input">Defects</label>
+              <div class="col-md-9">
+                <ckeditor id="defects-input" name="defects-input" [editor]="defectsEditor" [(ngModel)]="defects" [ngModelOptions]="{standalone: true}"></ckeditor>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="hobbies-input">Hobbies</label>
+              <div class="col-md-9">
+                <ckeditor id="hobbies-input" name="hobbies-input" [editor]="hobbiesEditor" [(ngModel)]="hobbies" [ngModelOptions]="{standalone: true}"></ckeditor>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="marital-input">Marital</label>
+              <div class="col-md-9">
+                <label class="switch switch-label switch-outline-primary-alt">
+                  <input class="switch-input" type="checkbox" formControlName="marital">
+                  <span class="switch-slider" data-checked="&#x2713;" data-unchecked="&#x2715;"></span>
+                </label>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="urlFB-input">Facebook</label>
+              <div class="col-md-9">
+                <input type="text" id="urlFB-input" name="urlFB-input" class="form-control" formControlName="urlFb">
+              </div>
+            </div>
+            
+            <div class="form-group row" *ngIf="element.id !== 0">
+              <label class="col-md-3 col-form-label">Others</label>
+              <div class="col-md-9 mb-4">
+                <tabset>
+                  <tab heading="Jobs History"></tab>
+                  <tab heading="Skills"></tab>
+                </tabset>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="card-footer">
+          <button type="submit" class="btn btn-sm btn-primary" [disabled]="!userForm.valid" (click)="save()"><i
+              class="fa fa-dot-circle-o"></i> Submit</button>
+          <button type="reset" class="btn btn-sm btn-danger" (click)="goBack()"><i class="fa fa-ban"></i> Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/.row-->
+</div>
