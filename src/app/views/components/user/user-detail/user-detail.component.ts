@@ -3,8 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 
-import { IUser } from '../../../../shared/models';
-import { Config } from '../../../../shared/models';
+import { Config, IUser } from '../../../../shared/models';
 import { DataService } from '../../../../shared/services';
 import { AuthService } from '../../../../auth/auth.service';
 

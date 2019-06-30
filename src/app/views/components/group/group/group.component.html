@@ -21,8 +21,8 @@
                 <td>{{element.name}}</td>
                 <td><i>View in detail</i></td>
                 <td>
-                  <button type="button" class="btn btn-primary" routerLink="/group/detail/{{element.id}}" [disabled]="element.name === 'Administrator' || (canView === false)">Detail</button>
-                  <button type="button" class="btn btn-danger" (click)="deleteElement(element.id)" [disabled]="element.name === 'Administrator' || (canDelete === false)">Delete</button>
+                  <button type="button" class="btn btn-primary" routerLink="/group/detail/{{element.id}}" [disabled]="element.name === 'Administrator' || !canView">Detail</button>
+                  <button type="button" class="btn btn-danger" (click)="deleteElement(element.id)" [disabled]="element.name === 'Administrator' || !canDelete">Delete</button>
                 </td>
               </tr>
             </tbody>

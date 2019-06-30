@@ -1,3 +1,94 @@
-<p>
-  project-detail works!
-</p>
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>Basic Form</strong> Elements
+        </div>
+        <div class="card-body">
+          <form class="form-horizontal" [formGroup]="projectForm" (ngSubmit)="save()">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="id-input">ID</label>
+              <div class="col-md-9">
+                <input type="text" id="id-input" name="id-input" class="form-control" placeholder="Disabled"
+                  value="{{element.id}}" disabled>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="name-input">Name</label>
+              <div class="col-md-9">
+                <input type="text" id="name-input" name="name-input" class="form-control" formControlName="name">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="desc-input">Description</label>
+              <div class="col-md-9">
+                <ckeditor id="desc-input" name="desc-input" [editor]="descEditor" [(ngModel)]="desc" [ngModelOptions]="{standalone: true}"></ckeditor>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="birthday-input">Start Date</label>
+              <div class="col-md-9">
+                <input class="form-control" id="startDate-input" type="date" name="startDate-input" formControlName="startDate">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="endDate-input">End Date</label>
+              <div class="col-md-9">
+                <input class="form-control" id="endDate-input" type="date" name="endDate-input" formControlName="endDate">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="marital-input">Status ( Working / Completed )</label>
+              <div class="col-md-9">
+                <label class="switch switch-label switch-outline-primary-alt">
+                  <input class="switch-input" type="checkbox" formControlName="status">
+                  <span class="switch-slider" data-checked="&#x2713;" data-unchecked="&#x2715;"></span>
+                </label>
+              </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="estimatedTime-input">Estimated Time</label>
+                <div class="col-md-9">
+                  <input type="number" id="estimatedTime-input" name="estimatedTime-input" class="form-control" formControlName="estimatedTime">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="estimatedTime-input">Total Spent Time</label>
+                <div class="col-md-9">
+                  <input type="number" id="totalSpentTime-input" name="totalSpentTime-input" class="form-control"
+                    formControlName="totalSpentTime">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="estimatedTime-input">Estimated Dura</label>
+                <div class="col-md-9">
+                  <input type="number" id="estimatedDura-input" name="estimatedDura-input" class="form-control"
+                    formControlName="estimatedDura">
+                </div>
+              </div>
+            
+            <div class="form-group row" *ngIf="element.id !== 0">
+              <label class="col-md-3 col-form-label">Others</label>
+              <div class="col-md-9 mb-4">
+                <tabset>
+                  <tab heading="Bug"></tab>
+                  <tab heading="File"></tab>
+                  <tab heading="Function"></tab>
+                  <tab heading="Report"></tab>
+                </tabset>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="card-footer">
+          <button type="submit" class="btn btn-sm btn-primary" [disabled]="!projectForm.valid" (click)="save()"><i
+              class="fa fa-dot-circle-o"></i> Submit</button>
+          <button type="reset" class="btn btn-sm btn-danger" (click)="goBack()"><i class="fa fa-ban"></i> Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/.row-->
+</div>

@@ -29,8 +29,8 @@
                 <td>{{element.phone}}</td>
                 <td>{{element.groupId}}</td>
                 <td>
-                  <button type="button" class="btn btn-primary" routerLink="/user/detail/{{element.id}}" [disabled]="canView === false">Detail</button>
-                  <button type="button" class="btn btn-danger" (click)="deleteElement(element.id)" [disabled]="canDelete === false">Delete</button>
+                  <button type="button" class="btn btn-primary" routerLink="/user/detail/{{element.id}}" [disabled]="!canView">Detail</button>
+                  <button type="button" class="btn btn-danger" (click)="deleteElement(element.id)" [disabled]="!canDelete">Delete</button>
                 </td>
               </tr>
             </tbody>
