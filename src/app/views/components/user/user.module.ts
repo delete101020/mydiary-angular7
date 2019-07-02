@@ -8,9 +8,11 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { UserRoutingModule } from './user-routing.module';
 import { UserComponent } from './user/user.component';
 import { UserDetailComponent } from './user-detail/user-detail.component';
+import { JobComponent } from './job/job.component';
+import { SkillComponent } from './skill/skill.component';
 
 @NgModule({
-  declarations: [UserComponent, UserDetailComponent],
+  declarations: [UserComponent, UserDetailComponent, JobComponent, SkillComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

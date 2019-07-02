@@ -1,3 +1,40 @@
-<p>
-  framework works!
-</p>
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> Framework List
+        </div>
+        <div class="card-body">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Summary</th>
+                <th>Research Date</th>
+                <th>URL</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let element of list$ | async">
+                <td>{{element.id}}</td>
+                <td>{{element.name}}</td>
+                <td>{{element.summary}}</td>
+                <td>{{element.researchDate | date}}</td>
+                <td>{{element.url}}</td>
+                <td>
+                  <button type="button" class="btn btn-primary" routerLink="/framework/detail/{{element.id}}"
+                    [disabled]="!canView">Detail</button>
+                  <button type="button" class="btn btn-danger" (click)="deleteElement(element.id)"
+                    [disabled]="!canDelete">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

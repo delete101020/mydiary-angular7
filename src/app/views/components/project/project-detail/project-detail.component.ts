@@ -57,9 +57,9 @@ export class ProjectDetailComponent implements OnInit {
       startDate: [{value: '', disabled: !this.canEdit}],
       endDate: [{value: '', disabled: !this.canEdit}],
       status: [{value: '', disabled: !this.canEdit}],
-      estimatedTime: [{value: '', disabled: !this.canEdit}],
-      totalSpentTime: [{value: '', disabled: !this.canEdit}],
-      estimatedDura: [{value: '', disabled: !this.canEdit}],
+      estimatedTime: [{value: '', disabled: !this.canEdit}, Validators.min(1)],
+      totalSpentTime: [{value: '', disabled: !this.canEdit}, Validators.min(0)],
+      estimatedDura: [{value: '', disabled: !this.canEdit}, Validators.min(1)],
     });
   }
 
@@ -116,6 +116,23 @@ export class ProjectDetailComponent implements OnInit {
 
   goBack() {
     this.location.back();
+  }
+
+  // For validators in template
+  get name() {
+    return this.projectForm.get('name');
+  }
+
+  get estimatedTime() {
+    return this.projectForm.get('estimatedTime');
+  }
+
+  get totalSpentTime() {
+    return this.projectForm.get('totalSpentTime');
+  }
+
+  get estimatedDura() {
+    return this.projectForm.get('estimatedDura');
   }
 
 }

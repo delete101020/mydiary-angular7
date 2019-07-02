@@ -25,7 +25,7 @@ export class GroupDetailComponent implements OnInit {
   groupForm: FormGroup;
   roles = [];
   raw = ROLES;
-  userList = [1, 2, 3];
+  userList = [1, 2, 3, 4];
 
   constructor(
     private authService: AuthService,

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
+import { MustMatch } from '../../../../helpers';
 
 import { Config, IUser } from '../../../../shared/models';
 import { DataService } from '../../../../shared/services';
@@ -67,7 +68,7 @@ export class UserDetailComponent implements OnInit {
       name: [{value: '', disabled: !this.canEdit}],
       email: [{value: '', disabled: !this.canEdit}, [Validators.required, Validators.email]],
       password: [{value: '', disabled: !this.canEdit}, [Validators.required, Validators.minLength(8), Validators.maxLength(12)]],
-      retypePassword: [{value: '', disabled: !this.canEdit}],
+      retypePassword: [{value: '', disabled: !this.canEdit}, Validators.required],
       phone: [{value: '', disabled: !this.canEdit}],
       gender: [{value: false, disabled: !this.canEdit}],
       birthday: [{value: '', disabled: !this.canEdit}],
@@ -78,6 +79,8 @@ export class UserDetailComponent implements OnInit {
       hobbies: [{value: '', disabled: !this.canEdit}],
       marital: [{value: '', disabled: !this.canEdit}],
       urlFb: [{value: '', disabled: !this.canEdit}]
+    }, {
+      validators: MustMatch('password', 'retypePassword')
     });
   }
 
@@ -153,5 +156,18 @@ export class UserDetailComponent implements OnInit {
 
   goBack() {
     this.location.back();
+  }
+
+  // Form validation in template
+  get email() {
+    return this.userForm.get('email');
+  }
+
+  get password() {
+    return this.userForm.get('password');
+  }
+
+  get retypePassword() {
+    return this.userForm.get('retypePassword');
   }
 }

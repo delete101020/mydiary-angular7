@@ -10,7 +10,10 @@ import { ProjectComponent } from './project/project.component';
 import { ProjectDetailComponent } from './project-detail/project-detail.component';
 
 @NgModule({
-  declarations: [ProjectComponent, ProjectDetailComponent],
+  declarations: [
+    ProjectComponent,
+    ProjectDetailComponent
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,

@@ -24,6 +24,7 @@
               <label class="col-md-3 col-form-label" for="email-input">Email</label>
               <div class="col-md-9">
                 <input type="email" id="email-input" name="email-input" class="form-control" formControlName="email">
+                <span class="help-block" *ngIf="email.invalid && email.errors.required">Email is required.</span>
               </div>
             </div>
             <div class="form-group row">
@@ -31,6 +32,8 @@
               <div class="col-md-9">
                 <input type="password" id="password-input" name="password-input" class="form-control"
                   formControlName="password">
+                <span class="help-block" *ngIf="password.invalid && password.errors.required">Password is
+                  required.</span>
               </div>
             </div>
             <div class="form-group row">
@@ -38,6 +41,10 @@
               <div class="col-md-9">
                 <input type="password" id="repassword-input" name="repassword-input" class="form-control"
                   formControlName="retypePassword">
+                <span class="help-block" *ngIf="retypePassword.invalid && retypePassword.errors.required">Retype
+                  password is required.</span>
+                <span class="help-block" *ngIf="retypePassword.invalid && retypePassword.errors.mustMatch">Password and
+                  retype password does not match.</span>
               </div>
             </div>
             <div class="form-group row">
@@ -72,32 +79,36 @@
             <div class="form-group row" *ngIf="element.avatar">
               <label class="col-md-3 col-form-label">Avatar</label>
               <div class="col-md-9">
-                <img class="avatar" src="{{element.avatar}}"/>
+                <img class="avatar" src="{{element.avatar}}" />
               </div>
             </div>
             <div class="form-group row">
               <label class="col-md-3 col-form-label" for="avatar-input" *ngIf="!element.avatar">Avatar</label>
               <label class="col-md-3 col-form-label" for="avatar-input" *ngIf="element.avatar"></label>
               <div class="col-md-9">
-                <input type="file" id="avatar-input" name="avatar-input" accept="image/*" (change)="onChangeImage($event)" [disabled]="!canEdit">
+                <input type="file" id="avatar-input" name="avatar-input" accept="image/*"
+                  (change)="onChangeImage($event)" [disabled]="!canEdit">
               </div>
             </div>
             <div class="form-group row">
               <label class="col-md-3 col-form-label" for="advantages-input">Advantages</label>
               <div class="col-md-9">
-                <ckeditor id="advantages-input" name="advantages-input" [editor]="advantagesEditor" [(ngModel)]="advantages" [ngModelOptions]="{standalone: true}"></ckeditor>
+                <ckeditor id="advantages-input" name="advantages-input" [editor]="advantagesEditor"
+                  [(ngModel)]="advantages" [ngModelOptions]="{standalone: true}"></ckeditor>
               </div>
             </div>
             <div class="form-group row">
               <label class="col-md-3 col-form-label" for="defects-input">Defects</label>
               <div class="col-md-9">
-                <ckeditor id="defects-input" name="defects-input" [editor]="defectsEditor" [(ngModel)]="defects" [ngModelOptions]="{standalone: true}"></ckeditor>
+                <ckeditor id="defects-input" name="defects-input" [editor]="defectsEditor" [(ngModel)]="defects"
+                  [ngModelOptions]="{standalone: true}"></ckeditor>
               </div>
             </div>
             <div class="form-group row">
               <label class="col-md-3 col-form-label" for="hobbies-input">Hobbies</label>
               <div class="col-md-9">
-                <ckeditor id="hobbies-input" name="hobbies-input" [editor]="hobbiesEditor" [(ngModel)]="hobbies" [ngModelOptions]="{standalone: true}"></ckeditor>
+                <ckeditor id="hobbies-input" name="hobbies-input" [editor]="hobbiesEditor" [(ngModel)]="hobbies"
+                  [ngModelOptions]="{standalone: true}"></ckeditor>
               </div>
             </div>
             <div class="form-group row">
@@ -115,13 +126,17 @@
                 <input type="text" id="urlFB-input" name="urlFB-input" class="form-control" formControlName="urlFb">
               </div>
             </div>
-            
+
             <div class="form-group row" *ngIf="element.id !== 0">
               <label class="col-md-3 col-form-label">Others</label>
               <div class="col-md-9 mb-4">
                 <tabset>
-                  <tab heading="Jobs History"></tab>
-                  <tab heading="Skills"></tab>
+                  <tab heading="Jobs History">
+                    <app-job></app-job>
+                  </tab>
+                  <tab heading="Skills">
+                    <app-skill></app-skill>
+                  </tab>
                 </tabset>
               </div>
             </div>
