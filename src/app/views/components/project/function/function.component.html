@@ -1,49 +1,150 @@
-<div class="row align-items-center">
-  <div class="col-4 col-sm-3 col-md-1 col-xl mb-3 mb-xl-0">
-    <button class="btn btn-block btn-outline-success" type="button">Add new</button>
+<div *ngIf="canDo.canView">
+  <div class="row">
+    <div class="col-12 col-sm-3 col-md-1 col-xl mb-3 mb-xl-0">
+      <button type="button" class="btn btn-secondary mr-1" data-toggle="modal" (click)="onAdd()">Add</button>
+      <button type="button" class="btn btn-secondary mr-1" data-toggle="modal" (click)="onEdit()">Edit</button>
+      <button type="button" class="btn btn-secondary mr-1" (click)="onDelete()">Delete</button>
+    </div>
   </div>
-  <div class="col-4 col-sm-3 col-md-1 col-xl mb-3 mb-xl-0">
-    <button class="btn btn-block btn-outline-primary" type="button">Edit</button>
-  </div>
-  <div class="col-4 col-sm-3 col-md-1 col-xl mb-3 mb-xl-0">
-    <button class="btn btn-block btn-outline-danger" type="button">Delete</button>
-  </div>
-</div>
 
-<div class="row">
-  <div class="col-md-12 col-form-label">
-    <table class="table table-responsive-sm table-bordered">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Estimated Time</th>
-          <th>Log Time</th>
-          <th>Start Date</th>
-          <th>End Date</th>
-          <th>Priority</th>
-          <th>Description</th>
-          <th>Status</th>
-          <th>Type</th>
-          <th>User ID</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let element of list$ | async" (click)="onSelect(element)"
-          [class.selected]="element === selectedElement">
-          <td>{{element.id}}</td>
-          <td>{{element.name}}</td>
-          <td>{{element.estimatedTime}}</td>
-          <td>{{element.logTime}}</td>
-          <td>{{element.startDate | date}}</td>
-          <td>{{element.endDate | date}}</td>
-          <td>{{element.priority}}</td>
-          <td>{{element.desc}}</td>
-          <td>{{element.status ? 'Completed' : 'Working'}}</td>
-          <td>{{element.type}}</td>
-          <td>{{element.userId}}</td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="row">
+    <div class="col-md-12 col-form-label">
+      <table class="table table-responsive-sm table-bordered">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Estimated Time</th>
+            <th>Log Time</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Priority</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Type</th>
+            <th>User</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let element of list$ | async" (click)="onSelect(element)"
+            [class.selected]="element === selectedElement">
+            <td>{{element.id}}</td>
+            <td>{{element.name}}</td>
+            <td>{{element.estimatedTime}}</td>
+            <td>{{element.logTime}}</td>
+            <td>{{element.startDate | date}}</td>
+            <td>{{element.endDate | date}}</td>
+            <td>{{element.priority}}</td>
+            <td>{{element.desc}}</td>
+            <td>{{element.status ? 'Completed' : 'Working'}}</td>
+            <td>{{element.type}}</td>
+            <td>{{element.userId}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
+
+  <div bsModal #functionModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="functionModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-primary modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Create / Edit Function</h4>
+          <button type="button" class="close" (click)="functionModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="id-input">ID</label>
+            <div class="col-md-9">
+              <input type="text" id="id-input" name="id-input" class="form-control" placeholder="Disabled" disabled
+                value="{{selectedElement.id}}">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="name-input">Name</label>
+            <div class="col-md-9">
+              <input type="text" id="name-input" name="name-input" class="form-control"
+                [(ngModel)]="selectedElement.name">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="estimatedTime-input">Estimated Time</label>
+            <div class="col-md-9">
+              <input type="number" id="estimatedTime-input" name="estimatedTime-input" class="form-control"
+                [(ngModel)]="selectedElement.estimatedTime">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="logTime-input">Log Time</label>
+            <div class="col-md-9">
+              <input type="number" id="logTime-input" name="logTime-input" class="form-control"
+                [(ngModel)]="selectedElement.logTime">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="startDate-input">Start Date</label>
+            <div class="col-md-9">
+              <input class="form-control" id="startDate-input" type="date" name="startDate-input"
+                [(ngModel)]="selectedElement.startDate">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="endDate-input">End Date</label>
+            <div class="col-md-9">
+              <input class="form-control" id="endDate-input" type="date" name="endDate-input"
+                [(ngModel)]="selectedElement.endDate">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="logTime-input">Priority</label>
+            <div class="col-md-9">
+              <select class="form-control" id="priority-input" name="priority-input"
+                [(ngModel)]="selectedElement.priority">
+                <option value="1">High</option>
+                <option value="2">Normal</option>
+                <option value="3">Low</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="desc-input">Desc</label>
+            <div class="col-md-9">
+              <ckeditor [(ngModel)]="selectedElement.desc" [editor]="Editor"></ckeditor>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="status-input">Status</label>
+            <div class="col-md-9">
+              <label class="switch switch-pill switch-primary">
+                <input class="switch-input" type="checkbox" [(ngModel)]="selectedElement.status">
+                <span class="switch-slider"></span>
+              </label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="logTime-input">Type</label>
+            <div class="col-md-9">
+              <input type="number" id="type-input" name="type-input" class="form-control"
+                [(ngModel)]="selectedElement.type">
+            </div>
+          </div>
+          <div class="form-group row" *ngIf="selectedElement.id !== 0">
+            <label class="col-md-3 col-form-label" for="user-input">User</label>
+            <div class="col-md-9">
+              <select class="form-control" id="user-input" name="user-input" [(ngModel)]="selectedElement.user">
+                <option *ngFor="let id of users" [ngValue]="id" [selected]="id === selectedElement.userId">{{id}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="functionModal.hide()">Close</button>
+          <button type="button" class="btn btn-primary" (click)="onSave()">Save changes</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
 </div>

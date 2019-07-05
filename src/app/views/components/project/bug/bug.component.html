@@ -34,7 +34,7 @@
   </div>
   
   <div bsModal #bugModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="bugModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-primary" role="document">
+    <div class="modal-dialog modal-primary modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title">Create / Edit Bug</h4>
@@ -59,8 +59,7 @@
           <div class="form-group row">
             <label class="col-md-3 col-form-label" for="desc-input">Desc</label>
             <div class="col-md-9">
-              <textarea class="form-control" id="desc-input" name="desc-input" rows="9" placeholder="Content.."
-                [(ngModel)]="selectedElement.desc"></textarea>
+              <ckeditor [(ngModel)]="selectedElement.desc" [editor]="Editor"></ckeditor>
             </div>
           </div>
           <div class="form-group row">

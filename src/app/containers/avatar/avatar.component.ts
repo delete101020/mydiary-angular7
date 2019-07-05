@@ -11,6 +11,7 @@ import { AuthService } from '../../auth/auth.service';
 export class AvatarComponent implements OnInit {
 
   isLogged = false;
+  userId = 0;
   avatar = '';
 
   constructor(
@@ -21,6 +22,7 @@ export class AvatarComponent implements OnInit {
   ngOnInit() {
     if (this.authService.currentUserValue) {
       this.avatar = this.authService.currentUserValue.avatar;
+      this.userId = this.authService.currentUserValue.id;
       this.isLogged = true;
     }
   }

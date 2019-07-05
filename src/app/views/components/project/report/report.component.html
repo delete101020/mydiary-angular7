@@ -1,33 +1,70 @@
-<div class="row align-items-center">
-  <div class="col-4 col-sm-3 col-md-1 col-xl mb-3 mb-xl-0">
-    <button class="btn btn-block btn-outline-success" type="button">Add new</button>
+<div *ngIf="canDo.canView">
+    <div class="row">
+      <div class="col-12 col-sm-3 col-md-1 col-xl mb-3 mb-xl-0">
+        <button type="button" class="btn btn-secondary mr-1" data-toggle="modal" (click)="onAdd()">Add</button>
+        <button type="button" class="btn btn-secondary mr-1" data-toggle="modal" (click)="onEdit()">Edit</button>
+        <button type="button" class="btn btn-secondary mr-1" (click)="onDelete()">Delete</button>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-md-12 col-form-label">
+        <table class="table table-responsive-sm table-bordered">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Title</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let element of list$ | async" (click)="onSelect(element)"
+              [class.selected]="element === selectedElement">
+              <td>{{element.id}}</td>
+              <td>{{element.title}}</td>
+              <td>{{element.desc}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <div bsModal #reportModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="reportModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-primary modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Create / Edit Report</h4>
+            <button type="button" class="close" (click)="reportModal.hide()" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="id-input">ID</label>
+              <div class="col-md-9">
+                <input type="text" id="id-input" name="id-input" class="form-control" placeholder="Disabled" disabled
+                  value="{{selectedElement.id}}">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="title-input">Title</label>
+              <div class="col-md-9">
+                <input type="text" id="title-input" name="title-input" class="form-control" [(ngModel)]="selectedElement.title">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="desc-input">Description</label>
+              <div class="col-md-9">
+                <ckeditor [(ngModel)]="selectedElement.desc" [editor]="Editor"></ckeditor>
+              </div>
+            </div>
+    
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="reportModal.hide()">Close</button>
+            <button type="button" class="btn btn-primary" (click)="onSave()">Save changes</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
   </div>
-  <div class="col-4 col-sm-3 col-md-1 col-xl mb-3 mb-xl-0">
-    <button class="btn btn-block btn-outline-primary" type="button">Edit</button>
-  </div>
-  <div class="col-4 col-sm-3 col-md-1 col-xl mb-3 mb-xl-0">
-    <button class="btn btn-block btn-outline-danger" type="button">Delete</button>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-md-12 col-form-label">
-    <table class="table table-responsive-sm table-bordered">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Title</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let element of list$ | async" (click)="onSelect(element)"
-          [class.selected]="element === selectedElement">
-          <td>{{element.id}}</td>
-          <td>{{element.title}}</td>
-          <td>{{element.desc}}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>

@@ -7,6 +7,8 @@ import { Config, IBug } from '../../../../shared/models';
 import { AuthService } from '../../../../auth/auth.service';
 import { DataService, UploadService } from '../../../../shared/services';
 
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
 @Component({
   selector: 'app-project-bug',
   templateUrl: './bug.component.html',
@@ -26,6 +28,8 @@ export class BugComponent implements OnInit {
     table: 'bug',
     id: 0
   };
+
+  public Editor = ClassicEditor;
   image: File;
 
   constructor(
@@ -56,7 +60,11 @@ export class BugComponent implements OnInit {
   }
 
   onSelect(element: IBug) {
-    this.selectedElement = element;
+    if (this.selectedElement === element) {
+      this.selectedElement = { id: 0 };
+    } else {
+      this.selectedElement = element;
+    }
   }
 
   onChangeImage(event: any) {
@@ -65,6 +73,7 @@ export class BugComponent implements OnInit {
 
   onAdd() {
     this.selectedElement = { id: 0 };
+    this.selectedElement.desc = '';
     this.bugModal.show();
   }
 

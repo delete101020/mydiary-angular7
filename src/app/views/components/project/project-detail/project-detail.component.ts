@@ -134,8 +134,7 @@ export class ProjectDetailComponent implements OnInit {
     if (this.config.id === 0) {
       this.addElement();
     } else {
-      console.log(this.config.data);
-      // this.updateElement();
+      this.updateElement();
     }
   }
 

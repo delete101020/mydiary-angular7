@@ -13,8 +13,6 @@ import { BugComponent } from './bug/bug.component';
 import { FileComponent } from './file/file.component';
 import { FunctionComponent } from './function/function.component';
 import { ReportComponent } from './report/report.component';
-import { FrameworkComponent } from './framework/framework.component';
-import { UserComponent } from './user/user.component';
 
 @NgModule({
   declarations: [
@@ -23,9 +21,7 @@ import { UserComponent } from './user/user.component';
     BugComponent,
     FileComponent,
     FunctionComponent,
-    ReportComponent,
-    FrameworkComponent,
-    UserComponent
+    ReportComponent
   ],
   imports: [
     CommonModule,
