@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, FormArray, FormControl, Validators } from '@ang
 import { MustMatch } from '../../../../helpers';
 
 import { Config, IUser } from '../../../../shared/models';
-import { DataService } from '../../../../shared/services';
+import { DataService, UploadService } from '../../../../shared/services';
 import { AuthService } from '../../../../auth/auth.service';
 
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
@@ -37,6 +37,7 @@ export class UserDetailComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private dataService: DataService,
+    private uploadServer: UploadService,
     private route: ActivatedRoute,
     private router: Router,
     private location: Location,
@@ -112,7 +113,7 @@ export class UserDetailComponent implements OnInit {
   async uploadImage() {
     let path = this.element.avatar;
     if (this.avatar) {
-      path = await this.dataService.upload(this.avatar);
+      path = await this.uploadServer.upload(this.avatar);
     }
     return path;
   }

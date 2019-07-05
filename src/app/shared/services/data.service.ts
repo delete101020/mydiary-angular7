@@ -11,7 +11,6 @@ import { Config } from '../models';
 export class DataService {
 
   private backendUrl = 'http://localhost:3000/api';
-  private uploadUrl = 'http://localhost:3000/upload/single';
 
   constructor(
     private http: HttpClient
@@ -61,17 +60,6 @@ export class DataService {
       case 'delete': apiUrl = apiUrl + '/' + config.table + '/delete/' + config.id; break;
     }
     return apiUrl;
-  }
-
-  async upload(file: File) {
-    const formData = new FormData();
-    formData.append('image', file, file.name);
-    let path = '';
-    await this.http.post<any>(this.uploadUrl, formData).toPromise()
-      .then(res => {
-        path = res.path;
-      });
-    return path;
   }
 
   private handleError<T> (operation = 'operation', result ?: T) {

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 import { UserRoutingModule } from './user-routing.module';
@@ -18,6 +19,7 @@ import { SkillComponent } from './skill/skill.component';
     ReactiveFormsModule,
     FormsModule,
     TabsModule.forRoot(),
+    ModalModule.forRoot(),
     CKEditorModule,
     UserRoutingModule
   ]

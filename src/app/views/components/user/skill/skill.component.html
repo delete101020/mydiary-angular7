@@ -1,31 +1,71 @@
-<div class="row align-items-center">
-  <div class="col-4 col-sm-3 col-md-1 col-xl mb-3 mb-xl-0">
-    <button class="btn btn-block btn-outline-success" type="button">Add new</button>
+<div *ngIf="canDo.canView">
+  <div class="row">
+    <div class="col-12 col-sm-3 col-md-1 col-xl mb-3 mb-xl-0">
+      <button type="button" class="btn btn-secondary mr-1" data-toggle="modal" (click)="onAdd()">Add</button>
+      <button type="button" class="btn btn-secondary mr-1" data-toggle="modal" (click)="onEdit()">Edit</button>
+      <button type="button" class="btn btn-secondary mr-1" (click)="onDelete()">Delete</button>
+    </div>
   </div>
-  <div class="col-4 col-sm-3 col-md-1 col-xl mb-3 mb-xl-0">
-    <button class="btn btn-block btn-outline-primary" type="button">Edit</button>
-  </div>
-  <div class="col-4 col-sm-3 col-md-1 col-xl mb-3 mb-xl-0">
-    <button class="btn btn-block btn-outline-danger" type="button">Delete</button>
-  </div>
-</div>
 
-<div class="row">
-  <div class="col-md-12 col-form-label">
-    <table class="table table-responsive-sm table-bordered">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let element of list$ | async" (click)="onSelect(element)"
-          [class.selected]="element === selectedElement">
-          <td>{{element.id}}</td>
-          <td>{{element.name}}</td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="row">
+    <div class="col-md-12 col-form-label">
+      <table class="table table-responsive-sm table-bordered">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Percent</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let element of list$ | async" (click)="onSelect(element)"
+            [class.selected]="element === selectedElement">
+            <td>{{element.id}}</td>
+            <td>{{element.name}}</td>
+            <td>{{element.percent}} %</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
+
+  <div bsModal #skillModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="skillModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-primary modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Create / Edit File</h4>
+          <button type="button" class="close" (click)="skillModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="id-input">ID</label>
+            <div class="col-md-9">
+              <input type="text" id="id-input" name="id-input" class="form-control" placeholder="Disabled" disabled
+                value="{{selectedElement.id}}">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="name-input">Name</label>
+            <div class="col-md-9">
+              <input type="text" id="name-input" name="name-input" class="form-control"
+                [(ngModel)]="selectedElement.name">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-md-3 col-form-label" for="percent-input">Percent</label>
+            <div class="col-md-9">
+              <input type="number" min="0" max="100" id="percent-input" name="percent-input" class="form-control" [(ngModel)]="selectedElement.percent">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="skillModal.hide()">Close</button>
+          <button type="button" class="btn btn-primary" (click)="onSave()">Save changes</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
 </div>
