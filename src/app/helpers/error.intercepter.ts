@@ -12,19 +12,16 @@ export class ErrorInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(catchError(err => {
-      if (err.status === 401) {
-        alert('Wrong email or password');
-        this.authService.logout();
-        location.reload();
-      }
-      if (err.status === 403) {
-        alert('No permission to do this action');
-      }
-      if (err.status === 422) {
-        alert('Error with validator');
-      }
-      if (err.status === 500) {
-        alert('Serve Error');
+      switch (err.status) {
+        case 400: alert('Error during process request data'); break;
+        case 401:
+          alert('Wrong email or password');
+          this.authService.logout();
+          location.reload();
+          break;
+        case 403: alert('No permission to do this action'); break;
+        case 422: alert('Error with validators'); break;
+        case 500: alert('Server Error'); break;
       }
 
       const error = err.error.message || err.statusText;

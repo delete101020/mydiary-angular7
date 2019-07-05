@@ -1,0 +1,49 @@
+<div class="row align-items-center">
+  <div class="col-4 col-sm-3 col-md-1 col-xl mb-3 mb-xl-0">
+    <button class="btn btn-block btn-outline-success" type="button">Add new</button>
+  </div>
+  <div class="col-4 col-sm-3 col-md-1 col-xl mb-3 mb-xl-0">
+    <button class="btn btn-block btn-outline-primary" type="button">Edit</button>
+  </div>
+  <div class="col-4 col-sm-3 col-md-1 col-xl mb-3 mb-xl-0">
+    <button class="btn btn-block btn-outline-danger" type="button">Delete</button>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12 col-form-label">
+    <table class="table table-responsive-sm table-bordered">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Estimated Time</th>
+          <th>Log Time</th>
+          <th>Start Date</th>
+          <th>End Date</th>
+          <th>Priority</th>
+          <th>Description</th>
+          <th>Status</th>
+          <th>Type</th>
+          <th>User ID</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let element of list$ | async" (click)="onSelect(element)"
+          [class.selected]="element === selectedElement">
+          <td>{{element.id}}</td>
+          <td>{{element.name}}</td>
+          <td>{{element.estimatedTime}}</td>
+          <td>{{element.logTime}}</td>
+          <td>{{element.startDate | date}}</td>
+          <td>{{element.endDate | date}}</td>
+          <td>{{element.priority}}</td>
+          <td>{{element.desc}}</td>
+          <td>{{element.status ? 'Completed' : 'Working'}}</td>
+          <td>{{element.type}}</td>
+          <td>{{element.userId}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

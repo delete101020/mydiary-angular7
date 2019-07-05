@@ -9,5 +9,6 @@ export interface IProject {
   totalSpentTime?: number;
   estimatedDura?: number;
   clientId?: number;
-  user?: [];
+  frameworks?: number[];
+  users?: any[];
 }

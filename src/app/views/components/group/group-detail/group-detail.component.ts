@@ -25,7 +25,8 @@ export class GroupDetailComponent implements OnInit {
   groupForm: FormGroup;
   roles = [];
   raw = ROLES;
-  userList = [1, 2, 3, 4];
+  userList = [];
+  selectUserList = [];
 
   constructor(
     private authService: AuthService,
@@ -42,7 +43,6 @@ export class GroupDetailComponent implements OnInit {
     this.groupForm = this.formBuilder.group({
       name: [{ value: '', disabled: !this.canEdit}, Validators.required],
       roles: new FormArray([]),
-      users: ['']
     });
 
     of(this.getRoles()).subscribe(roles => {
@@ -54,6 +54,8 @@ export class GroupDetailComponent implements OnInit {
     if (this.config.id !== 0) {
       this.getDetail();
     }
+
+    this.getUserList();
   }
 
   // Working with Checkboxes
@@ -109,7 +111,7 @@ export class GroupDetailComponent implements OnInit {
         });
         this.element.role = data.role;
         if (data.users) {
-          data.users.forEach(user => this.element.users.push(user.id));
+          data.users.forEach(user => this.selectUserList.push(user.id));
         }
         this.updateCheckboxes();
       });
@@ -118,7 +120,7 @@ export class GroupDetailComponent implements OnInit {
   beforeSave() {
     this.element.name = this.groupForm.value.name;
     this.element.role = this.getSelectedRoles().toString();
-    this.element.users = this.groupForm.value.users;
+    this.element.users = this.selectUserList;
     this.config.data = this.element;
   }
 
@@ -153,6 +155,41 @@ export class GroupDetailComponent implements OnInit {
     const url = '/' + this.config.table + '/';
     this.canCreate = this.authService.checkRole(url + 'create');
     this.canEdit = this.authService.checkRole(url + 'edit');
+  }
+
+  // Multi select
+  remove(array: number[], value: number) {
+    array.forEach( (v, i) => {
+      if (v === value) {
+        array.splice(i, 1);
+      }
+    });
+  }
+
+  sortUsers() {
+    this.userList.sort();
+    this.selectUserList.sort();
+  }
+
+  selectUser(id: number) {
+    this.selectUserList.push(id);
+    this.remove(this.userList, id);
+    this.sortUsers();
+  }
+
+  deselectUser(id: number) {
+    this.userList.push(id);
+    this.remove(this.selectUserList, id);
+    this.sortUsers();
+  }
+
+  getUserList() {
+    this.dataService.getList({table: 'user'})
+      .subscribe(res => {
+        res
+          .filter(user => user.groupId === null)
+          .map(user => this.userList.push(user.id));
+      });
   }
 
 }

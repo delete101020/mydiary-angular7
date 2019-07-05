@@ -26,6 +26,16 @@ export class ProjectDetailComponent implements OnInit {
   public descEditor = ClassicEditor;
   desc = '';
 
+  frameworkList = [];
+  frameworks = [];
+  selectedFrameworks = [];
+
+  userList = [];
+  users = [];
+  selectedUsers = [];
+  leader: 0;
+  manager: 0;
+
   constructor(
     private authService: AuthService,
     private dataService: DataService,
@@ -38,6 +48,9 @@ export class ProjectDetailComponent implements OnInit {
   ngOnInit() {
     this.canDoIt();
     this.buildForm();
+    this.getFrameworks();
+    this.getUsers();
+
     this.config.id = +this.route.snapshot.paramMap.get('id');
     if (this.config.id !== 0) {
       this.getDetail();
@@ -66,8 +79,19 @@ export class ProjectDetailComponent implements OnInit {
   getDetail() {
     return this.dataService.getDetail(this.config)
       .subscribe(data => {
-        this.element = data;
-        this.desc = this.element.desc;
+        this.element.id = data.id;
+        this.element.name = data.name;
+        this.element.desc = data.desc;
+        this.element.startDate = data.startDate;
+        this.element.endDate = data.endDate;
+        this.element.status = data.status;
+        this.element.estimatedTime = data.estimatedTime;
+        this.element.totalSpentTime = data.totalSpentTime;
+        this.element.estimatedDura = data.estimatedDura;
+        this.element.clientId = data.clientId;
+        this.element.frameworks = data.frameworks.map(f => f.id);
+        this.element.users = data.users;
+
         this.updateFormValue(this.element);
       });
   }
@@ -83,12 +107,26 @@ export class ProjectDetailComponent implements OnInit {
       totalSpentTime: element.totalSpentTime,
       estimatedDura: element.estimatedDura
     });
+    this.desc = this.element.desc;
+    this.element.frameworks.forEach(id => this.selectFramework(id));
+    this.element.users.forEach(user => {
+      this.selectUser(user.id);
+      this.leader = user.roles.leader ? user.id : this.leader;
+      this.manager = user.roles.manager ? user.id : this.manager;
+    });
   }
 
   beforeSave() {
     this.projectForm.get('desc').setValue(this.desc);
-    const data = this.projectForm.value;
-    this.config.data = data;
+    this.element = this.projectForm.value;
+    this.element.users = [];
+    this.element.frameworks = this.selectedFrameworks;
+
+    this.selectedUsers.forEach(id => {
+      const user = { 'userId': id, 'leader': this.leader === id ? 1 : 0, 'manager': this.manager === id ? 1 : 0 };
+      this.element.users.push(user);
+    });
+    this.config.data = this.element;
   }
 
   save() {
@@ -96,7 +134,8 @@ export class ProjectDetailComponent implements OnInit {
     if (this.config.id === 0) {
       this.addElement();
     } else {
-      this.updateElement();
+      console.log(this.config.data);
+      // this.updateElement();
     }
   }
 
@@ -133,6 +172,78 @@ export class ProjectDetailComponent implements OnInit {
 
   get estimatedDura() {
     return this.projectForm.get('estimatedDura');
+  }
+
+  // Multi select
+  remove(array: number[], value: number) {
+    array.forEach( (v, i) => {
+      if (v === value) {
+        array.splice(i, 1);
+      }
+    });
+  }
+
+  sortArray(array1: number[], array2: number[]) {
+    array1.sort();
+    array2.sort();
+  }
+
+  selectOption(src: number[], des: number[], id: number) {
+    des.push(id);
+    this.remove(src, id);
+    this.sortArray(src, des);
+  }
+
+  findName(array: any[], id: number) {
+    return array.find(e => e.id === id).name;
+  }
+
+  getFrameworks() {
+    this.dataService.getList({table: 'framework'})
+      .subscribe(res => {
+        res.map(framework => {
+          this.frameworkList.push({ id: framework.id, name: framework.name});
+          this.frameworks.push(framework.id);
+        });
+      });
+  }
+
+  selectFramework(id: number) {
+    this.selectOption(this.frameworks, this.selectedFrameworks, id);
+  }
+
+  deselectFramework(id: number) {
+    this.selectOption(this.selectedFrameworks, this.frameworks, id);
+  }
+
+  getUsers() {
+    this.dataService.getList({table: 'user'})
+      .subscribe(res => {
+        res.map(user => {
+          this.userList.push({ id: user.id, name: user.name});
+          this.users.push(user.id);
+        });
+      });
+  }
+
+  selectUser(id: number) {
+    this.selectOption(this.users, this.selectedUsers, id);
+  }
+
+  deselectUser(id: number) {
+    this.selectOption(this.selectedUsers, this.users, id);
+    if (this.selectedUsers.length === 0) {
+      this.leader = 0;
+      this.manager = 0;
+    }
+  }
+
+  changeLeader(event: any) {
+    this.leader = event;
+  }
+
+  changeManager(event: any) {
+    this.manager = event;
   }
 
 }

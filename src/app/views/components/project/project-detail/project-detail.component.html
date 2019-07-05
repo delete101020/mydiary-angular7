@@ -80,14 +80,81 @@
               </div>
             </div>
 
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Frameworks</label>
+              <div class="col-md-4">
+                All frameworks :
+                <select class="form-control" size="5" multiple name="frameworks" id="frameworks">
+                  <option *ngFor="let id of frameworks" (click)="selectFramework(id)">{{findName(frameworkList, id)}}</option>
+                </select>
+              </div>
+              <div class="col-md-1">
+                <button type="button" class="button"><i class="fa fa-arrows-h" aria-hidden="true"></i></button>
+              </div>
+              <div class="col-md-4">
+                Selected frameworks :
+                <select class="form-control" size="5" multiple name="selectedFrameworks" id="selectedFrameworks">
+                  <option *ngFor="let id of selectedFrameworks" (click)="deselectFramework(id)">{{findName(frameworkList, id)}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label">Members</label>
+              <div class="col-md-4">
+                Leader :
+                <select class="form-control" id="selectLeader" name="selectLeader" [ngModel]="selectedUsers" [ngModelOptions]="{standalone: true}" (ngModelChange)="changeLeader($event)">
+                  <option *ngFor="let id of selectedUsers" [ngValue]="id">{{findName(userList, id)}}</option>
+                </select>
+              </div>
+              <div class="col-md-1"></div>
+              <div class="col-md-4">
+                Manager :
+                <select class="form-control" id="selectManager" name="selectManager" [ngModel]="selectedUsers" [ngModelOptions]="{standalone: true}" (ngModelChange)="changeManager($event)">
+                  <option *ngFor="let id of selectedUsers" [ngValue]="id">{{findName(userList, id)}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label"></label>
+              <div class="col-md-4">
+                All users :
+                <select class="form-control" size="5" multiple name="users" id="users">
+                  <option *ngFor="let id of users" (click)="selectUser(id)">{{findName(userList, id)}}</option>
+                </select>
+              </div>
+              <div class="col-md-1">
+                <button type="button" class="button"><i class="fa fa-arrows-h" aria-hidden="true"></i></button>
+              </div>
+              <div class="col-md-4">
+                Selected members :
+                <select class="form-control" size="5" multiple name="selectedUsers" id="selectedUsers">
+                  <option *ngFor="let id of selectedUsers" (click)="deselectUser(id)">{{findName(userList, id)}}</option>
+                </select>
+              </div>
+            </div>
+
             <div class="form-group row" *ngIf="element.id !== 0">
               <label class="col-md-3 col-form-label">Others</label>
               <div class="col-md-9 mb-4">
                 <tabset>
-                  <tab heading="Bug"></tab>
-                  <tab heading="File"></tab>
-                  <tab heading="Function"></tab>
-                  <tab heading="Report"></tab>
+                  <tab heading="Bugs">
+                    <app-project-bug></app-project-bug>
+                  </tab>
+                  <tab heading="Files">
+                    <app-project-file></app-project-file>
+                  </tab>
+                  <tab heading="Functions">
+                    <app-project-function></app-project-function>
+                  </tab>
+                  <tab heading="Reports">
+                    <app-project-report></app-project-report>
+                  </tab>
+                  <tab heading="Frameworks">
+                    <app-project-framework></app-project-framework>
+                  </tab>
+                  <tab heading="Users">
+                    <app-project-user></app-project-user>
+                  </tab>
                 </tabset>
               </div>
             </div>

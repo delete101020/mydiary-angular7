@@ -4,7 +4,6 @@ import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 import { Config } from '../models';
-import { AuthService } from '../../auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +14,7 @@ export class DataService {
   private uploadUrl = 'http://localhost:3000/upload/single';
 
   constructor(
-    private http: HttpClient,
-    private authService: AuthService
+    private http: HttpClient
   ) { }
 
   // CRUD
@@ -62,7 +60,6 @@ export class DataService {
       case 'edit': apiUrl = apiUrl + '/' + config.table + '/edit/' + config.id; break;
       case 'delete': apiUrl = apiUrl + '/' + config.table + '/delete/' + config.id; break;
     }
-    console.log('From Data Service: ' + apiUrl);
     return apiUrl;
   }
 
