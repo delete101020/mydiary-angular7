@@ -1,3 +1,39 @@
-<p>
-  tool works!
-</p>
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> Tool List
+          <button class="btn btn-primary float-right" (click)="exportExcel()"><i class="fa fa-lightbulb-o"></i> Export to Excel</button>
+        </div>
+        <div class="card-body">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>URL</th>
+                <th>Description</th>
+                <th>Advantages / Defects</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let element of list$ | async">
+                <td>{{element.id}}</td>
+                <td>{{element.name}}</td>
+                <td>{{element.url}}</td>
+                <td>{{element.desc | slice:0:50}} ...</td>
+                <td><i>View in detail</i></td>
+                <td>
+                  <button type="button" class="btn btn-primary" routerLink="/tool/detail/{{element.id}}" [disabled]="!canView">Detail</button>
+                  <button type="button" class="btn btn-danger" (click)="deleteElement(element.id)" [disabled]="!canDelete">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

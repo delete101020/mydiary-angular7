@@ -1,3 +1,57 @@
-<p>
-  tool-detail works!
-</p>
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>Basic Form</strong> Elements
+        </div>
+        <div class="card-body">
+          <form class="form-horizontal">
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="id-input">ID</label>
+              <div class="col-md-9">
+                <input type="text" id="id-input" name="id-input" class="form-control" placeholder="Disabled"
+                  value="{{element.id}}" disabled>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="name-input">Name</label>
+              <div class="col-md-9">
+                <input type="text" id="name-input" name="name-input" class="form-control" [(ngModel)]="element.name">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="id-input">URL</label>
+              <div class="col-md-9">
+                <input type="text" id="url-input" name="url-input" class="form-control" [(ngModel)]="element.url">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="desc-input">Description</label>
+              <div class="col-md-9">
+                <ckeditor id="desc-input" name="desc-input" [editor]="descEditor" [(ngModel)]="element.desc"></ckeditor>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="advantages-input">Advantages</label>
+              <div class="col-md-9">
+                <ckeditor id="advantages-input" name="advantages-input" [editor]="advantagesEditor" [(ngModel)]="element.advantages"></ckeditor>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="defects-input">Defects</label>
+              <div class="col-md-9">
+                <ckeditor id="defects-input" name="defects-input" [editor]="defectsEditor" [(ngModel)]="element.defects"></ckeditor>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="card-footer">
+          <button type="submit" class="btn btn-sm btn-primary" (click)="save()"><i class="fa fa-dot-circle-o"></i> Submit</button>
+          <button type="reset" class="btn btn-sm btn-danger" (click)="goBack()"><i class="fa fa-ban"></i> Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--/.row-->
+</div>

@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+
+import { AuthService } from '../../../../auth/auth.service';
+import { Config, ITool } from '../../../../shared/models';
+import { DataService } from '../../../../shared/services';
+import { ExportService } from '../../../../shared/services';
 
 @Component({
   selector: 'app-tool',
@@ -7,9 +13,48 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ToolComponent implements OnInit {
 
-  constructor() { }
+  canView = false;
+  canDelete = false;
+
+  config: Config = { table: 'tool' };
+  list$: Observable<ITool[]>;
+  data: any[];
+
+  constructor(
+    private authService: AuthService,
+    private dataService: DataService,
+    private exportService: ExportService
+  ) { }
 
   ngOnInit() {
+    this.canDoIt();
+    this.getList();
+  }
+
+  getList() {
+    this.list$ = this.dataService.getList(this.config);
+    this.list$.subscribe(l => this.data = l);
+  }
+
+  canDoIt() {
+    const url = '/' + this.config.table + '/';
+    this.canView = this.authService.checkRole(url + 'detail/');
+    this.canDelete = this.authService.checkRole(url + 'delete');
+  }
+
+  deleteElement(id: number) {
+    if (confirm('Are you sure to delete this record ?')) {
+      this.config.id = id;
+      this.dataService.deleteData(this.config)
+        .subscribe(() => this.getList());
+    }
+  }
+
+  exportExcel() {
+    const title = 'Tool List';
+    const header = this.data.map(e => Object.keys(e))[0];
+    const data = this.data.map(e => Object.values(e));
+    this.exportService.generateExcel('tool-list', title, header.map(h => h.toUpperCase()), data);
   }
 
 }
