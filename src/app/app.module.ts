@@ -42,7 +42,8 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 import { AuthModule } from './auth/auth.module';
-import { JwtInterceptor, ErrorInterceptor } from './helpers';
+import { JwtInterceptor, LoaderInterceptor, ErrorInterceptor } from './helpers';
+import { LoaderComponent } from './shared/components/loader/loader.component';
 
 @NgModule({
   imports: [
@@ -66,10 +67,12 @@ import { JwtInterceptor, ErrorInterceptor } from './helpers';
     ...APP_CONTAINERS,
     P404Component,
     P500Component,
-    RegisterComponent
+    RegisterComponent,
+    LoaderComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     DatePipe
   ],
