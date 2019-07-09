@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
+import { apiUrl } from '../../config';
 import { Config } from '../models';
 
 @Injectable({
@@ -10,7 +11,7 @@ import { Config } from '../models';
 })
 export class DataService {
 
-  private backendUrl = 'http://localhost:3000/api';
+  private apiUrl = apiUrl;
 
   constructor(
     private http: HttpClient
@@ -48,18 +49,18 @@ export class DataService {
   }
 
   getApiUrl(config: Config, operation: string): string {
-    let apiUrl = this.backendUrl;
+    let url = this.apiUrl;
     if (config.hasOwnProperty('parentTable')) {
-      apiUrl = apiUrl + '/' + config.parentTable + '/' + config.parentId;
+      url = url + '/' + config.parentTable + '/' + config.parentId;
     }
     switch (operation) {
-      case 'list': apiUrl = apiUrl + '/' + config.table + '/list'; break;
-      case 'detail': apiUrl = apiUrl + '/' + config.table + '/' + config.id; break;
-      case 'create': apiUrl = apiUrl + '/' + config.table + '/create'; break;
-      case 'edit': apiUrl = apiUrl + '/' + config.table + '/edit/' + config.id; break;
-      case 'delete': apiUrl = apiUrl + '/' + config.table + '/delete/' + config.id; break;
+      case 'list': url = url + '/' + config.table + '/list'; break;
+      case 'detail': url = url + '/' + config.table + '/' + config.id; break;
+      case 'create': url = url + '/' + config.table + '/create'; break;
+      case 'edit': url = url + '/' + config.table + '/edit/' + config.id; break;
+      case 'delete': url = url + '/' + config.table + '/delete/' + config.id; break;
     }
-    return apiUrl;
+    return url;
   }
 
   private handleError<T> (operation = 'operation', result ?: T) {

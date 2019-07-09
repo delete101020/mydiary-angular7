@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
+import { uploadUrl } from '../../config';
+
 @Injectable({
   providedIn: 'root'
 })
 export class UploadService {
 
-  private uploadUrl = 'http://localhost:3000/upload/single';
+  private uploadUrl = uploadUrl;
 
   constructor(
     private http: HttpClient
