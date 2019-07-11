@@ -50,11 +50,14 @@ export class ToolComponent implements OnInit {
     }
   }
 
-  exportExcel() {
+  exportTo(type: string) {
     const title = 'Tool List';
-    const header = this.data.map(e => Object.keys(e))[0];
+    const headers = this.data.map(e => Object.keys(e))[0];
     const data = this.data.map(e => Object.values(e));
-    this.exportService.generateExcel('tool-list', title, header.map(h => h.toUpperCase()), data);
+    switch (type) {
+      case 'excel': this.exportService.generateExcel('tool-list', title, headers, data); break;
+      case 'csv': this.exportService.generateCsv('tool-list', title, headers, data); break;
+    }
   }
 
 }

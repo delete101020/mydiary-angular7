@@ -3,6 +3,7 @@ import { DatePipe } from '@angular/common';
 
 import { Workbook } from 'exceljs';
 import * as FileSaver from 'file-saver';
+import { AngularCsv } from 'angular7-csv/dist/Angular-csv';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class ExportService {
     private datePipe: DatePipe
   ) { }
 
-  generateExcel(fileName: string, title: string, header: string[], data: any[]) {
+  generateExcel(fileName: string, title: string, headers: string[], data: any[]) {
 
     const workbook = new Workbook();
     const worksheet = workbook.addWorksheet('Car Data');
@@ -30,7 +31,7 @@ export class ExportService {
 
     worksheet.addRow([]);
 
-    const headerRow = worksheet.addRow(header);
+    const headerRow = worksheet.addRow(headers);
     headerRow.font = { name: 'Times New Roman', family: 4, size: 14, bold: true };
     headerRow.alignment = { vertical: 'middle', horizontal: 'center' };
     headerRow.eachCell((cell, colNumber) => {
@@ -52,12 +53,33 @@ export class ExportService {
 
     workbook.xlsx.writeBuffer()
       .then((d) => {
-        this.saveFile(d, fileName + '.xlsx');
+        this.saveExcelFile(d, fileName + '.xlsx');
       });
   }
 
-  saveFile(buffer: any, fileName: string) {
+  saveExcelFile(buffer: any, fileName: string) {
     const data: Blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
     FileSaver.saveAs(data, fileName);
+  }
+
+  generateCsv(fileName: string, title: string, headers: string[], data: any[]) {
+    const csvOptions = {
+      fieldSeparator: '-',
+      quoteStrings: '"',
+      decimalseparator: '.',
+      showLabel: true,
+      showTitle: true,
+      title,
+      usrBom: true,
+      noDownload: false,
+      headers
+    };
+
+    this.saveCSVFile(data, fileName, csvOptions);
+
+  }
+
+  saveCSVFile(data: any[], fileName: string, options: any) {
+    const download = new AngularCsv(data, fileName, options);
   }
 }
