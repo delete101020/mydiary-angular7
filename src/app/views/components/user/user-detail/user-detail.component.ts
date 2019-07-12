@@ -7,6 +7,7 @@ import { MustMatch } from '../../../../helpers';
 import { Config, IUser } from '../../../../shared/models';
 import { DataService, UploadService } from '../../../../shared/services';
 import { AuthService } from '../../../../auth/auth.service';
+import { ExportService } from '../../../../shared/services';
 
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
@@ -37,7 +38,8 @@ export class UserDetailComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private dataService: DataService,
-    private uploadServer: UploadService,
+    private uploadService: UploadService,
+    private exportService: ExportService,
     private route: ActivatedRoute,
     private router: Router,
     private location: Location,
@@ -113,7 +115,7 @@ export class UserDetailComponent implements OnInit {
   async uploadImage() {
     let path = this.element.avatar;
     if (this.avatar) {
-      path = await this.uploadServer.upload(this.avatar);
+      path = await this.uploadService.upload(this.avatar);
     }
     return path;
   }
@@ -170,5 +172,12 @@ export class UserDetailComponent implements OnInit {
 
   get retypePassword() {
     return this.userForm.get('retypePassword');
+  }
+
+  exportPdf() {
+    const fileName = 'user-detail';
+    const title = 'User Detail';
+    const data = this.element;
+    this.exportService.generatePdf(fileName, title, data);
   }
 }

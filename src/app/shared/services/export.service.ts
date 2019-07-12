@@ -4,6 +4,7 @@ import { DatePipe } from '@angular/common';
 import { Workbook } from 'exceljs';
 import * as FileSaver from 'file-saver';
 import { AngularCsv } from 'angular7-csv/dist/Angular-csv';
+import * as jsPDF from 'jspdf';
 
 @Injectable({
   providedIn: 'root'
@@ -76,10 +77,36 @@ export class ExportService {
     };
 
     this.saveCSVFile(data, fileName, csvOptions);
-
   }
 
   saveCSVFile(data: any[], fileName: string, options: any) {
     const download = new AngularCsv(data, fileName, options);
+  }
+
+  generatePdf(fileName: string, title: string, data: any) {
+    const header = Object.keys(data);
+    const content = Object.values(data);
+
+    const doc = new jsPDF();
+    const pageWidth = doc.internal.pageSize.width || doc.internal.pageSize.getWidth();
+    const left = 20;
+    const top = 30;
+
+    // Title
+    doc.setFont('times', 'bold');
+    doc.setFontSize(20);
+    doc.text(pageWidth / 2, top - 10, title, 'center');
+
+    // Content
+    doc.setFontSize(14);
+    content.forEach((e, i) => {
+      doc.setFont('times', 'bold');
+      doc.text(header[i].toUpperCase(), left, top + i * 10);
+
+      doc.setFont('times', 'normal');
+      doc.text(content[i].toString(), left + 40, top + i * 10);
+    });
+
+    doc.save(fileName + '.pdf');
   }
 }
